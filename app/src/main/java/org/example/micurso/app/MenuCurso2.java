@@ -9,8 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
-
 
 public class MenuCurso2 extends ActionBarActivity {
 
@@ -25,9 +23,6 @@ public class MenuCurso2 extends ActionBarActivity {
 
           //Loading image from below url into imageView
 
-        Picasso.with(this)
-                .load("http://pgbcursos.1apps.com/menu.png")
-                .into(imageView);
 
 
     }
