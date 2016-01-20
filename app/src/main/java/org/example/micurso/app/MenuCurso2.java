@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -21,13 +19,11 @@ public class MenuCurso2 extends ActionBarActivity {
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
 
-          //Loading image from below url into imageView
-
-
 
     }
 
     public void Programa(View v){
+        //Ver el temario del curso que se encuentra en programa.html
         String url="http://pgbcursos.1apps.com/programa.html";
 
         Intent i = new Intent(Intent.ACTION_VIEW);
@@ -36,7 +32,7 @@ public class MenuCurso2 extends ActionBarActivity {
     }
 
     public void Documentos(View v){
-        //String url="http://pgbcursos.1apps.com/documentos2.html";
+        //Ir a la carpeta compartida de GoogleDrive del Profesor
 
         String url="https://drive.google.com/folderview?id=0B9nFwumYtUw9ZWpDUkQ1SWJ0Z2s&usp=sharing";
 
@@ -47,18 +43,15 @@ public class MenuCurso2 extends ActionBarActivity {
 
     public void Tareas(View v){
 
-        //String url="http://pgbcursos.1apps.com/programa.html";
-
-        //Intent i = new Intent(Intent.ACTION_VIEW);
-        //i.setData(Uri.parse(url));
-        //startActivity(i);
+        //Envia las tareas a traves del email mediante un attachment
+        //La tarea debera estar alojada en el GoogleDrive del estudiante
         Intent i=new Intent(MenuCurso2.this,SendMail.class);
         startActivity(i);
 
     }
 
     public void GoogleDrive(View v){
-        //String url="http://pgbcursos.1apps.com/documentos2.html"
+        //Abre el GoogleDrive del usuario. cada usuario sólo puede ver su Repositorio de GoogleDrive personal
         String url="https://drive.google.com/?tab=mo&authuser=0";
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
@@ -67,6 +60,9 @@ public class MenuCurso2 extends ActionBarActivity {
 
 
     public void Calificaciones(View v){
+        //Ver las calificaciones del Estudiante
+        //Cada estudiante sólo puede ver sus calificaciones
+
         String url="http://pgbcursos.1apps.com/programa.html";
 
         Intent i = new Intent(Intent.ACTION_VIEW);
@@ -74,24 +70,6 @@ public class MenuCurso2 extends ActionBarActivity {
         startActivity(i);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_curso2, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 }
