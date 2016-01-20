@@ -1,0 +1,106 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0px"
+    android:padding="0px"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:id="@+id/ln1"
+  >
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:src="@drawable/molecula3"
+        android:layout_gravity="center_horizontal" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:orientation="vertical">
+
+
+         <Button
+             android:id="@+id/btn1"
+             android:layout_width="fill_parent"
+             android:background="@drawable/boton2"
+             android:layout_margin="8dp"
+             android:layout_marginRight="8dp"
+             android:textStyle="bold"
+             android:textSize="20sp"
+             android:textColor="#FFF"
+             android:layout_height="wrap_content"
+             android:text="Programa"
+             android:onClick="Programa"
+             />
+         <Button
+             android:id="@+id/btn2"
+             android:layout_width="fill_parent"
+             android:background="@drawable/boton2"
+             android:layout_margin="8dp"
+             android:layout_marginRight="8dp"
+             android:textStyle="bold"
+             android:textSize="20sp"
+             android:textColor="#FFF"
+             android:layout_height="wrap_content"
+             android:text="Documentos"
+             android:onClick="Documentos"
+             />
+         <Button
+             android:id="@+id/btn3"
+             android:layout_width="fill_parent"
+             android:background="@drawable/boton2"
+             android:layout_margin="8dp"
+             android:layout_marginRight="8dp"
+             android:textStyle="bold"
+             android:textSize="20sp"
+             android:textColor="#FFF"
+             android:layout_height="wrap_content"
+             android:text="Tareas"
+             android:onClick="Tareas"
+             />
+         <Button
+             android:id="@+id/btnDrive"
+             android:layout_width="fill_parent"
+             android:background="@drawable/boton2"
+             android:layout_margin="8dp"
+             android:layout_marginRight="8dp"
+             android:textStyle="bold"
+             android:textSize="20sp"
+             android:textColor="#FFF"
+             android:layout_height="wrap_content"
+             android:text="Mi GoogleDrive"
+             android:onClick="GoogleDrive"
+             />
+         <Button
+             android:id="@+id/btn4"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:layout_margin="8dp"
+             android:layout_marginRight="8dp"
+             android:textStyle="bold"
+             android:textSize="20sp"
+             android:textColor="#FFF"
+             android:text="Calificaciones"
+             android:onClick="Calificaciones"
+             android:background="@drawable/boton2"
+             />
+
+
+
+     </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+
+</LinearLayout>
