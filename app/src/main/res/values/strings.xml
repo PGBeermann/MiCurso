@@ -9,5 +9,7 @@
     <string name="title_activity_menu_curso">MenuCurso</string>
     <string name="title_activity_menu_curso2">MenuCurso2</string>
     <string name="title_activity_send_mail">SendMail</string>
+    <string name="title_activity_mis_cursos">MisCursos</string>
+    <string name="title_activity_nuevo_curso">NuevoCurso</string>
 
 </resources>

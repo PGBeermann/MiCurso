@@ -1,9 +1,11 @@
 package org.example.micurso.app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,13 +13,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-public class Curso extends ActionBarActivity {
+public class Curso extends Activity {
     JSONObject jsonObject;
     HttpConn ht;
     TextView txt1;
     TextView txt2;
     TextView txt3;
     TextView txt4;
+
     Session session=new Session();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,49 +31,179 @@ public class Curso extends ActionBarActivity {
         txt3=(TextView) findViewById(R.id.txt3);
         txt4=(TextView) findViewById(R.id.txt4);
 
-        ht=new HttpConn(Curso.this);
-        String url = "http://pgbcursos.1apps.com/curso.txt";
-        ht.Open(url);
-        ht.setCustomObjectListener(new MyCustomObjectListener() {
-            @Override
-            public void onObjectReady(String result) {
+        Toast.makeText(getBaseContext(),"onCreate",Toast.LENGTH_SHORT).show();
+    }
 
-                try {
-                    jsonObject = new JSONObject(result);
-                    String abrev=jsonObject.getString("ABREV");
-                    String denom=jsonObject.getString("DENOM");
-                    String escuela=jsonObject.getString("ESCUELA");
-                    String url=jsonObject.getString("URL");
-
-                    session.abrev=abrev;
-                    session.denom=denom;
-                    session.escuela=escuela;
-                    session.url=url;
-
-                    txt1.setText(denom);
-                    txt2.setText(abrev);
-                    txt3.setText(escuela);
-                    txt4.setText(url);
-
-                }catch(JSONException e){
-
-                }
-
-
-
-
-            }
-        });
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(getBaseContext(),"onResume",Toast.LENGTH_SHORT).show();
+        if(session.activa) {
+            txt1.setText(session.denom);
+            txt2.setText(session.abrev);
+            txt3.setText(session.escuela);
+            txt4.setText(session.url);
+        }
+        else{
+            txt1.setText("SESION INACTIVA");
+            txt2.setText("Escoja un curso");
+            txt3.setText("");
+            txt4.setText("");
+        }
 
     }
 
+    void LeerDatos(String url){
+        ht=new HttpConn(Curso.this);
+        url += "/curso.txt";
+        //Toast.makeText(getBaseContext(),"Leyendo:"+url,Toast.LENGTH_SHORT).show();
+        if(ht.isConnected()) {
 
-      public void Iniciar(View v){
-        Toast.makeText(getBaseContext(),"Iniciando Sesion",Toast.LENGTH_LONG).show();
-          Intent i=new Intent(Curso.this,MenuCurso2.class);
-          startActivity(i);
-       }
+            Toast.makeText(getBaseContext(),"Conectado",Toast.LENGTH_LONG).show();
+            // Intent i=new Intent(Curso.this,MisCursos.class);
+            // startActivityForResult(i,1);
+
+
+
+
+
+            ht.Open(url);
+            ht.setCustomObjectListener(new MyCustomObjectListener() {
+                @Override
+                public void onObjectReady(String result) {
+
+                    try {
+                        jsonObject = new JSONObject(result);
+                        String abrev = jsonObject.getString("ABREV");
+                        String denom = jsonObject.getString("DENOM");
+                        String escuela = jsonObject.getString("ESCUELA");
+                        String url = jsonObject.getString("URL");
+                        String cronograma = jsonObject.getString("CRONOGRAMA");
+                        String googledrive = jsonObject.getString("GOOGLEDRIVE");
+                        session.abrev = abrev;
+                        session.denom = denom;
+                        session.escuela = escuela;
+                        session.url = url;
+                        session.cronograma=cronograma;
+                        session.googledrive=googledrive;
+                        session.activa=true;
+                        txt1.setText(denom);
+                        txt2.setText(abrev);
+                        txt3.setText(escuela);
+                        txt4.setText(url);
+
+
+                    } catch (JSONException e) {
+                        session.activa=false;
+                        txt1.setText("SESION INACTIVA");
+                        txt2.setText("Escoja un curso válido");
+                        txt3.setText("");
+                        txt4.setText("");
+                    }
+
+
+                }
+            });
+        }else{
+            Toast.makeText(getBaseContext(),"No esta conectado a internet...",Toast.LENGTH_LONG).show();
+            session.activa=false;
+            //finish();
+        }
+    }
+
+
+
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+
+                String website=data.getStringExtra("WEBSITE");
+
+                LeerDatos(website);
+
+
+                // Do something with the contact here (bigger example below)
+            }
+        }
+
+        if (requestCode == 2) {
+
+            if (resultCode == RESULT_OK) {
+
+                int id=data.getIntExtra("ID",0);
+                String website=data.getStringExtra("WEBSITE");
+                String abrev=data.getStringExtra("ABREV");
+
+                Toast.makeText(getBaseContext(),"Datos eliminar "+id,Toast.LENGTH_SHORT).show();
+
+                UsuariosSQLiteHelper usH = new UsuariosSQLiteHelper(this, "DBUsuarios", null, 3);
+                usH.eliminaCurso(id);
+
+            }
+        }
+        if (requestCode == 3) {
+
+            if (resultCode == RESULT_OK) {
+
+                String website=data.getStringExtra("WEBSITE");
+                String abrev=data.getStringExtra("ABREV");
+
+                LeerDatos(website);
+
+            }
+        }
+    }
+
+     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu1, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // action with ID action_refresh was selected
+            case R.id.action_escoger:
+                Intent i1=new Intent(Curso.this,MisCursos.class);
+                startActivityForResult(i1,1);
+                break;
+            // action with ID action_settings was selected
+            case R.id.action_iniciar:
+                if(session.activa) {
+                    Toast.makeText(getBaseContext(), "Iniciando Sesion", Toast.LENGTH_LONG).show();
+                    Intent i = new Intent(Curso.this, MenuCurso2.class);
+                    startActivity(i);
+                }else{
+                    Toast.makeText(getBaseContext(), "No has iniciado sesion", Toast.LENGTH_LONG).show();
+                }
+                break;
+            case R.id.action_eliminar:
+
+                Intent i2=new Intent(Curso.this,MisCursos.class);
+                startActivityForResult(i2,2);
+                Toast.makeText(getBaseContext(),"Curso eliminado",Toast.LENGTH_LONG).show();
+                break;
+            case R.id.action_nuevo:
+
+                Toast.makeText(getBaseContext(),"Nuevo curso",Toast.LENGTH_LONG).show();
+                Intent nc=new Intent(Curso.this,NuevoCurso.class);
+                startActivityForResult(nc, 3);
+                break;
+
+
+            default:
+                break;
+        }
+        return true;
+    }
+
 
 
 

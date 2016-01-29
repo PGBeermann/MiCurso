@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_nuevo"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_notification_play_download"
+        android:title="Nuevo"/>
+    <item
+        android:id="@+id/action_iniciar"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_maps_beenhere"
+        android:title="Iniciar"/>
+    <item
+        android:id="@+id/action_escoger"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_device_storage"
+        android:title="Escoger un curso"/>
+
+    <item
+        android:id="@+id/action_eliminar"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_action_delete"
+        android:title="Eliminar curso"/>
+
+</menu>

@@ -6,7 +6,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -102,7 +101,7 @@ public class HttpConn {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(ctx,"Lectura finalizada",Toast.LENGTH_LONG);
+            //Toast.makeText(ctx,"Lectura finalizada",Toast.LENGTH_LONG);
             listener.onObjectReady(result);
 
         }
