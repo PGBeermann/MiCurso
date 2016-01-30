@@ -10,6 +10,7 @@ public class Session {
     public static String cronograma;
     public static String googledrive;
     public static boolean activa=false;
+    public static int id;
 
     Session(){
 

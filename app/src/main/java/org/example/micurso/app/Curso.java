@@ -1,6 +1,8 @@
 package org.example.micurso.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,13 +33,13 @@ public class Curso extends Activity {
         txt3=(TextView) findViewById(R.id.txt3);
         txt4=(TextView) findViewById(R.id.txt4);
 
-        Toast.makeText(getBaseContext(),"onCreate",Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(getBaseContext(),"onResume",Toast.LENGTH_SHORT).show();
+
         if(session.activa) {
             txt1.setText(session.denom);
             txt2.setText(session.abrev);
@@ -137,13 +139,37 @@ public class Curso extends Activity {
             if (resultCode == RESULT_OK) {
 
                 int id=data.getIntExtra("ID",0);
+                session.id=id;
                 String website=data.getStringExtra("WEBSITE");
                 String abrev=data.getStringExtra("ABREV");
+                boolean op=false;
 
-                Toast.makeText(getBaseContext(),"Datos eliminar "+id,Toast.LENGTH_SHORT).show();
 
-                UsuariosSQLiteHelper usH = new UsuariosSQLiteHelper(this, "DBUsuarios", null, 3);
-                usH.eliminaCurso(id);
+                AlertDialog alertDialog = new AlertDialog.Builder(Curso.this).create();
+                alertDialog.setTitle("Cuidado");
+                alertDialog.setMessage("Va a eliminar un curso");
+                alertDialog.setIcon(R.drawable.ic_launcher);
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                UsuariosSQLiteHelper usH = new UsuariosSQLiteHelper(Curso.this, "DBUsuarios", null, 3);
+                                usH.eliminaCurso(session.id);
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancelar",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                               dialog.cancel();
+                            }
+                        });
+
+                alertDialog.show();
+
+
+                //UsuariosSQLiteHelper usH = new UsuariosSQLiteHelper(this, "DBUsuarios", null, 3);
+                //usH.eliminaCurso(id);
 
             }
         }
@@ -188,7 +214,7 @@ public class Curso extends Activity {
 
                 Intent i2=new Intent(Curso.this,MisCursos.class);
                 startActivityForResult(i2,2);
-                Toast.makeText(getBaseContext(),"Curso eliminado",Toast.LENGTH_LONG).show();
+
                 break;
             case R.id.action_nuevo:
 
@@ -203,6 +229,8 @@ public class Curso extends Activity {
         }
         return true;
     }
+
+
 
 
 

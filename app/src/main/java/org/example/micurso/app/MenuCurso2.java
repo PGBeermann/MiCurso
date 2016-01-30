@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -25,11 +24,7 @@ public class MenuCurso2 extends Activity {
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
 
         Picasso.with(MenuCurso2.this).load(R.drawable.menu).into(imageView);
-        if(session.activa){
-            Toast.makeText(getBaseContext(),"Session esta activa",Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(getBaseContext(),"Session se ha desactivado",Toast.LENGTH_SHORT).show();
-        }
+        setTitle("Menú");
     }
 
     public void Programa(View v){
@@ -93,11 +88,7 @@ public class MenuCurso2 extends Activity {
         switch (item.getItemId()) {
             // action with ID action_refresh was selected
             case R.id.action_regresar:
-                if(session.activa){
-                    Toast.makeText(getBaseContext(),"Session esta activa",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getBaseContext(),"Session se ha desactivado",Toast.LENGTH_SHORT).show();
-                }
+
                 Intent i1=new Intent(MenuCurso2.this,Curso.class);
                 startActivity(i1);
                 break;
